@@ -92,8 +92,7 @@ Customer-Analytics-and-Machine-Learning/
 Clone the repository:
 
 ```bash
-git clone <your-github-repository-url>
-cd Customer-Analytics-and-Machine-Learning
+git clone https://github.com/PratikshagDS/customer-churn-prediction.git
 ```
 
 Install the required dependencies:
