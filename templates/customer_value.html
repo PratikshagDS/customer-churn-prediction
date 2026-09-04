@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Customer Value
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <span class="tag">
+        CUSTOMER VALUE
+    </span>
+
+    <h1>
+        How valuable is this customer?
+    </h1>
+
+    <p>
+        Select a customer to estimate their future value.
+    </p>
+
+</div>
+
+
+<div class="split-container">
+
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <div class="left-panel">
+
+        <h2>
+            Select Customer
+        </h2>
+
+        <p class="help-text">
+            Choose a customer from the dropdown.
+            The system will use the trained model to estimate
+            the customer's future value.
+        </p>
+
+
+        <form method="POST"
+              action="{{ url_for('customer_value') }}">
+
+            <label for="customer_id">
+                Customer
+            </label>
+
+
+            <select
+                id="customer_id"
+                name="customer_id"
+                class="select-box"
+                required
+            >
+
+                <option value="">
+                    Select a customer
+                </option>
+
+
+                {% for customer in customers %}
+
+                    <option
+                        value="{{ customer.id }}"
+                        {% if customer.id == selected_id %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ customer.label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="main-button"
+            >
+
+                Estimate Customer Value
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+            <div class="error-box">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="right-panel">
+
+
+        {% if not prediction %}
+
+            <div class="empty-result">
+
+                <div class="big-icon">
+                    💰
+                </div>
+
+                <h2>
+                    Customer Value
+                </h2>
+
+                <p>
+                    Select a customer on the left
+                    to see the estimated value here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= VALUE RESULT ================= -->
+
+        {% if prediction %}
+
+            <div class="value-result">
+
+                <span class="tag">
+                    CUSTOMER VALUE
+                </span>
+
+
+                <h2>
+                    {{ prediction.title }}
+                </h2>
+
+
+                <div class="value-number">
+                    {{ prediction.value }}
+                </div>
+
+
+                <p>
+                    {{ prediction.message }}
+                </p>
+
+
+                <div class="simple-advice">
+
+                    💡
+                    This estimate helps you understand
+                    which customers may be more valuable
+                    in the future.
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= THREE FEATURES ================= -->
+
+        {% if customer_insights %}
+
+            <div class="feature-grid three-features">
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        💰
+                    </span>
+
+                    <small>
+                        Total Spending
+                    </small>
+
+                    <strong>
+                        ₹{{ "{:,.0f}".format(
+                            customer_insights.total_spending
+                        ) }}
+                    </strong>
+
+                </div>
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        🛒
+                    </span>
+
+                    <small>
+                        Total Purchases
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.total_transactions }}
+                    </strong>
+
+                </div>
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        📅
+                    </span>
+
+                    <small>
+                        Recent Activity
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.recent_activity }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{% endblock %}

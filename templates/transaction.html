@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Transaction Center
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <span class="tag">
+        TRANSACTIONS
+    </span>
+
+    <h1>
+        Transaction Center
+    </h1>
+
+    <p>
+        Choose what you want to understand about transactions.
+    </p>
+
+</div>
+
+
+<div class="feature-grid">
+
+
+    <!-- TRANSACTION SAFETY -->
+
+    <a href="{{ url_for('transaction_safety') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            🛡️
+        </div>
+
+        <h2>
+            Is This Transaction Safe?
+        </h2>
+
+        <p>
+            Select a transaction and check
+            whether it looks unusual.
+        </p>
+
+        <span class="feature-link">
+            Check Transaction →
+        </span>
+
+    </a>
+
+
+    <!-- TRANSACTION OVERVIEW -->
+
+    <div class="feature-card">
+
+        <div class="feature-icon">
+            🛒
+        </div>
+
+        <h2>
+            Transaction Overview
+        </h2>
+
+        <p>
+            Review transaction activity
+            and purchase information.
+        </p>
+
+        <span class="feature-link">
+            Available in Dashboard
+        </span>
+
+    </div>
+
+
+    <!-- BUSINESS -->
+
+    <a href="{{ url_for('insights') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            📊
+        </div>
+
+        <h2>
+            Business Overview
+        </h2>
+
+        <p>
+            View useful information from
+            your transaction data.
+        </p>
+
+        <span class="feature-link">
+            View Insights →
+        </span>
+
+    </a>
+
+
+</div>
+
+{% endblock %}

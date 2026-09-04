@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ================= WELCOME ================= -->
+
+<div class="analysis-box">
+
+    <span class="small-label">
+        WELCOME
+    </span>
+
+
+    <h1>
+        Understand your customers.<br>
+        Make better decisions.
+    </h1>
+
+
+    <p>
+        Explore customer behavior, value,
+        transaction safety, and useful
+        suggestions — all in one place.
+    </p>
+
+</div>
+
+
+
+<!-- ================= SUMMARY CARDS ================= -->
+
+<div class="dashboard-grid">
+
+
+    <!-- CUSTOMERS -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            👥
+        </div>
+
+        <h2>
+            {{ total_customers }}
+        </h2>
+
+        <p>
+            Customers
+        </p>
+
+    </div>
+
+
+
+    <!-- TRANSACTIONS -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🛒
+        </div>
+
+        <h2>
+            {{ total_transactions }}
+        </h2>
+
+        <p>
+            Transactions
+        </p>
+
+    </div>
+
+
+
+    <!-- SPENDING -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            💰
+        </div>
+
+        <h2>
+            ₹{{ "{:,.0f}".format(total_spending) }}
+        </h2>
+
+        <p>
+            Total Purchase Value
+        </p>
+
+    </div>
+
+
+
+    <!-- FRAUD -->
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🛡️
+        </div>
+
+        <h2>
+            {{ "{:.2f}".format(fraud_rate) }}%
+        </h2>
+
+        <p>
+            Transactions Needing Attention
+        </p>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================= EXPLORE ================= -->
+
+<div class="section-header">
+
+    <span class="small-label">
+        EXPLORE
+    </span>
+
+
+    <h2>
+        What would you like to understand?
+    </h2>
+
+
+    <p>
+        Choose an area to get started.
+    </p>
+
+</div>
+
+
+
+<!-- ================= FEATURE CARDS ================= -->
+
+<div class="feature-grid">
+
+
+    <!-- CUSTOMER -->
+
+    <a href="{{ url_for('customer') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            👤
+        </div>
+
+
+        <h2>
+            Understand Your Customers
+        </h2>
+
+
+        <p>
+            See customer behavior,
+            risk, value, and preferences.
+        </p>
+
+
+        <span class="feature-link">
+            Explore →
+        </span>
+
+    </a>
+
+
+
+    <!-- TRANSACTION -->
+
+    <a href="{{ url_for('transaction') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            🛡️
+        </div>
+
+
+        <h2>
+            Check Transaction Safety
+        </h2>
+
+
+        <p>
+            Check whether a transaction
+            looks unusual.
+        </p>
+
+
+        <span class="feature-link">
+            Explore →
+        </span>
+
+    </a>
+
+
+
+    <!-- BUSINESS -->
+
+    <a href="{{ url_for('insights') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            📊
+        </div>
+
+
+        <h2>
+            Understand Your Business
+        </h2>
+
+
+        <p>
+            Discover simple insights from
+            your customer and transaction data.
+        </p>
+
+
+        <span class="feature-link">
+            View Insights →
+        </span>
+
+    </a>
+
+
+</div>
+
+
+{% endblock %}

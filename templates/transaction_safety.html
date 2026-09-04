@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Transaction Safety
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <span class="tag">
+        TRANSACTION SAFETY
+    </span>
+
+    <h1>
+        Is this transaction safe?
+    </h1>
+
+    <p>
+        Select a transaction to check whether it looks unusual.
+    </p>
+
+</div>
+
+
+<div class="split-container">
+
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <div class="left-panel">
+
+        <h2>
+            Select Transaction
+        </h2>
+
+        <p class="help-text">
+            Choose a transaction from the dropdown.
+            You do not need to type the Transaction ID.
+        </p>
+
+
+        <form method="POST"
+              action="{{ url_for('transaction_safety') }}">
+
+            <label for="transaction_id">
+                Transaction
+            </label>
+
+
+            <select
+                id="transaction_id"
+                name="transaction_id"
+                class="select-box"
+                required
+            >
+
+                <option value="">
+                    Select a transaction
+                </option>
+
+
+                {% for transaction in transactions %}
+
+                    <option
+                        value="{{ transaction.id }}"
+                        {% if transaction.id == selected_id %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ transaction.label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="main-button"
+            >
+
+                Check Transaction
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+            <div class="error-box">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="right-panel">
+
+
+        <!-- EMPTY RESULT -->
+
+        {% if not prediction %}
+
+            <div class="empty-result">
+
+                <div class="big-icon">
+                    🛡️
+                </div>
+
+                <h2>
+                    Transaction Result
+                </h2>
+
+                <p>
+                    Select a transaction on the left
+                    to see the safety result here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= PREDICTION ================= -->
+
+        {% if prediction %}
+
+            <div class="result-box {{ prediction.type }}">
+
+                <span class="tag">
+                    TRANSACTION RESULT
+                </span>
+
+
+                <h2>
+                    {{ prediction.title }}
+                </h2>
+
+
+                <p>
+                    {{ prediction.message }}
+                </p>
+
+
+                <div class="simple-advice">
+
+                    💡
+                    {{ prediction.advice }}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= TRANSACTION DETAILS ================= -->
+
+        {% if transaction_insights %}
+
+            <div class="feature-grid three-features">
+
+
+                <!-- AMOUNT -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        💰
+                    </span>
+
+                    <small>
+                        Purchase Amount
+                    </small>
+
+                    <strong>
+                        ₹{{ "{:,.0f}".format(
+                            transaction_insights.amount
+                        ) }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- PAYMENT -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        💳
+                    </span>
+
+                    <small>
+                        Payment Method
+                    </small>
+
+                    <strong>
+                        {{ transaction_insights.payment }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- BRAND -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        🏷️
+                    </span>
+
+                    <small>
+                        Brand
+                    </small>
+
+                    <strong>
+                        {{ transaction_insights.brand }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{% endblock %}

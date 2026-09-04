@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Customer Risk
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ================= PAGE HEADER ================= -->
+
+<div class="page-header">
+
+    <span class="tag">
+        CUSTOMER RISK
+    </span>
+
+    <h1>
+        Is this customer likely to leave?
+    </h1>
+
+    <p>
+        Select a customer from the dropdown to check the prediction.
+    </p>
+
+</div>
+
+
+<!-- ================= HALF PARTITION ================= -->
+
+<div class="split-container">
+
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <div class="left-panel">
+
+        <h2>
+            Select Customer
+        </h2>
+
+        <p class="help-text">
+            Choose a customer from the list.
+            You do not need to remember or type the Customer ID.
+        </p>
+
+
+        <form method="POST"
+              action="{{ url_for('customer_risk') }}">
+
+
+            <label for="customer_id">
+                Customer
+            </label>
+
+
+            <select
+                id="customer_id"
+                name="customer_id"
+                class="select-box"
+                required
+            >
+
+                <option value="">
+                    Select a customer
+                </option>
+
+
+                {% for customer in customers %}
+
+                    <option
+                        value="{{ customer.id }}"
+                        {% if customer.id == selected_id %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ customer.label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="main-button"
+            >
+
+                Check Customer
+
+            </button>
+
+
+        </form>
+
+
+        <!-- ERROR -->
+
+        {% if error %}
+
+            <div class="error-box">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="right-panel">
+
+
+        <!-- NO RESULT YET -->
+
+        {% if not prediction %}
+
+            <div class="empty-result">
+
+                <div class="big-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Customer Result
+                </h2>
+
+                <p>
+                    Select a customer on the left
+                    to see the prediction here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= PREDICTION ================= -->
+
+        {% if prediction %}
+
+            <div class="result-box {{ prediction.type }}">
+
+                <span class="tag">
+                    PREDICTION
+                </span>
+
+
+                <h2>
+                    {{ prediction.title }}
+                </h2>
+
+
+                <p>
+                    {{ prediction.message }}
+                </p>
+
+
+                <div class="simple-advice">
+
+                    💡
+                    {{ prediction.advice }}
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= THREE FEATURES ================= -->
+
+        {% if customer_insights %}
+
+            <div class="feature-grid three-features">
+
+
+                <!-- FEATURE 1 -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        💰
+                    </span>
+
+                    <small>
+                        Total Spending
+                    </small>
+
+                    <strong>
+                        ₹{{ "{:,.0f}".format(
+                            customer_insights.total_spending
+                        ) }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- FEATURE 2 -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        🛒
+                    </span>
+
+                    <small>
+                        Total Purchases
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.total_transactions }}
+                    </strong>
+
+                </div>
+
+
+
+                <!-- FEATURE 3 -->
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        📅
+                    </span>
+
+                    <small>
+                        Recent Activity
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.recent_activity }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Suggestions
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <span class="tag">
+        CUSTOMER SUGGESTIONS
+    </span>
+
+    <h1>
+        What might this customer like?
+    </h1>
+
+    <p>
+        Select a customer to get simple product or brand suggestions.
+    </p>
+
+</div>
+
+
+<div class="split-container">
+
+
+    <!-- ================= LEFT SIDE ================= -->
+
+    <div class="left-panel">
+
+        <h2>
+            Select Customer
+        </h2>
+
+        <p class="help-text">
+            Choose a customer from the dropdown.
+            The system will use the customer's previous activity
+            to generate suggestions.
+        </p>
+
+
+        <form method="POST"
+              action="{{ url_for('recommendations') }}">
+
+            <label for="customer_id">
+                Customer
+            </label>
+
+
+            <select
+                id="customer_id"
+                name="customer_id"
+                class="select-box"
+                required
+            >
+
+                <option value="">
+                    Select a customer
+                </option>
+
+
+                {% for customer in customers %}
+
+                    <option
+                        value="{{ customer.id }}"
+                        {% if customer.id == selected_id %}
+                            selected
+                        {% endif %}
+                    >
+
+                        {{ customer.label }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="main-button"
+            >
+
+                Get Suggestions
+
+            </button>
+
+        </form>
+
+
+        {% if error %}
+
+            <div class="error-box">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- ================= RIGHT SIDE ================= -->
+
+    <div class="right-panel">
+
+
+        {% if not suggestions %}
+
+            <div class="empty-result">
+
+                <div class="big-icon">
+                    ⭐
+                </div>
+
+                <h2>
+                    Customer Suggestions
+                </h2>
+
+                <p>
+                    Select a customer on the left
+                    to see suggestions here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= SUGGESTIONS ================= -->
+
+        {% if suggestions %}
+
+            <div class="suggestion-result">
+
+                <span class="tag">
+                    SUGGESTIONS
+                </span>
+
+
+                <h2>
+                    Recommended for this customer
+                </h2>
+
+
+                <p>
+                    Based on the customer's previous activity,
+                    these may be useful suggestions.
+                </p>
+
+
+                <div class="suggestion-list">
+
+                    {% for suggestion in suggestions %}
+
+                        <div class="suggestion-item">
+
+                            ⭐ {{ suggestion }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="simple-advice">
+
+                    💡
+                    Suggestions are based on patterns
+                    found in the available customer data.
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        <!-- ================= THREE FEATURES ================= -->
+
+        {% if customer_insights %}
+
+            <div class="feature-grid three-features">
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        💰
+                    </span>
+
+                    <small>
+                        Total Spending
+                    </small>
+
+                    <strong>
+                        ₹{{ "{:,.0f}".format(
+                            customer_insights.total_spending
+                        ) }}
+                    </strong>
+
+                </div>
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        🛒
+                    </span>
+
+                    <small>
+                        Total Purchases
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.total_transactions }}
+                    </strong>
+
+                </div>
+
+
+                <div class="feature-card compact-card">
+
+                    <span>
+                        📅
+                    </span>
+
+                    <small>
+                        Recent Activity
+                    </small>
+
+                    <strong>
+                        {{ customer_insights.recent_activity }}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{% endblock %}

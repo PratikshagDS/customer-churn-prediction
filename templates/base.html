@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}CustomerIQ{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🎯 CustomerIQ
+        </div>
+
+
+        <nav>
+
+
+            <!-- DASHBOARD -->
+
+            <a href="{{ url_for('home') }}"
+               class="nav-link {% if page == 'home' %}active{% endif %}">
+
+                🏠 Dashboard
+
+            </a>
+
+
+            <!-- ================= CUSTOMERS ================= -->
+
+            <div class="nav-title">
+                CUSTOMERS
+            </div>
+
+
+            <a href="{{ url_for('customer') }}"
+               class="nav-link {% if page == 'customer' %}active{% endif %}">
+
+                👤 Understand Customers
+
+            </a>
+
+
+            <a href="{{ url_for('customer_risk') }}"
+               class="nav-link {% if page == 'customer-risk' %}active{% endif %}">
+
+                🔴 Will They Leave?
+
+            </a>
+
+
+            <a href="{{ url_for('customer_value') }}"
+               class="nav-link {% if page == 'customer-value' %}active{% endif %}">
+
+                💰 Customer Value
+
+            </a>
+
+
+            <a href="{{ url_for('recommendations') }}"
+               class="nav-link {% if page == 'recommendations' %}active{% endif %}">
+
+                ⭐ What Might They Like?
+
+            </a>
+
+
+            <!-- ================= TRANSACTIONS ================= -->
+
+            <div class="nav-title">
+                TRANSACTIONS
+            </div>
+
+
+            <a href="{{ url_for('transaction') }}"
+               class="nav-link {% if page == 'transaction' %}active{% endif %}">
+
+                🛒 Transaction Center
+
+            </a>
+
+
+            <a href="{{ url_for('transaction_safety') }}"
+               class="nav-link {% if page == 'transaction-safety' %}active{% endif %}">
+
+                🛡️ Is This Transaction Safe?
+
+            </a>
+
+
+            <!-- ================= BUSINESS ================= -->
+
+            <div class="nav-title">
+                BUSINESS
+            </div>
+
+
+            <a href="{{ url_for('insights') }}"
+               class="nav-link {% if page == 'insights' %}active{% endif %}">
+
+                📊 Business Overview
+
+            </a>
+
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+</div>
+
+</body>
+
+</html>

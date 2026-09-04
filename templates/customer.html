@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}
+CustomerIQ - Customers
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ================= PAGE HEADER ================= -->
+
+<div class="page-header">
+
+    <span class="tag">
+        CUSTOMERS
+    </span>
+
+
+    <h1>
+        Understand your customers
+    </h1>
+
+
+    <p>
+        Choose what you want to learn about a customer.
+    </p>
+
+</div>
+
+
+
+<!-- ================= CUSTOMER OPTIONS ================= -->
+
+<div class="feature-grid">
+
+
+    <!-- CUSTOMER RISK -->
+
+    <a href="{{ url_for('customer_risk') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            🔴
+        </div>
+
+
+        <h2>
+            Will They Leave?
+        </h2>
+
+
+        <p>
+            Check whether a customer may
+            stop buying from you.
+        </p>
+
+
+        <span class="feature-link">
+            Check Customer →
+        </span>
+
+    </a>
+
+
+
+    <!-- CUSTOMER VALUE -->
+
+    <a href="{{ url_for('customer_value') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            💰
+        </div>
+
+
+        <h2>
+            Customer Value
+        </h2>
+
+
+        <p>
+            See the estimated future
+            value of a customer.
+        </p>
+
+
+        <span class="feature-link">
+            Check Value →
+        </span>
+
+    </a>
+
+
+
+    <!-- RECOMMENDATIONS -->
+
+    <a href="{{ url_for('recommendations') }}"
+       class="feature-card">
+
+        <div class="feature-icon">
+            ⭐
+        </div>
+
+
+        <h2>
+            What Might They Like?
+        </h2>
+
+
+        <p>
+            Get simple product or
+            brand suggestions.
+        </p>
+
+
+        <span class="feature-link">
+            Get Suggestions →
+        </span>
+
+    </a>
+
+
+</div>
+
+
+{% endblock %}
